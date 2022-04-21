@@ -10,6 +10,8 @@ import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,8 +23,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ImageView srcImg = findViewById(R.id.imageView);
         ImageView watermarkImg = findViewById(R.id.watermarkImage);
+        Button button = findViewById(R.id.button);
+        Button reset = findViewById(R.id.resetButton);
         Bitmap bitmap = imgToBitmap(R.drawable.field_6574455__340);
-        watermarkImg.setImageBitmap(addWatermark(bitmap));
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                    watermarkImg.setImageBitmap(addWatermark(bitmap,Color.WHITE,50,"@Gia"));
+            }
+        });
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                watermarkImg.setImageResource(R.drawable.field_6574455__340);
+            }
+        });
     }
 
     // src image to bitmap
@@ -32,13 +47,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // add watermark bottom left
-    private Bitmap addWatermark(Bitmap srcBitmap){
+    private Bitmap addWatermark(Bitmap srcBitmap,int color,int size,String text){
         Paint textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        textPaint.setColor(Color.WHITE);
-        textPaint.setTextSize(50);
+        textPaint.setColor(color);
+        textPaint.setTextSize(size);
         textPaint.setDither(true);
         textPaint.setFilterBitmap(true);
-        String text ="Hello!";
         //create new bitmap
         Bitmap newBitmap = null;
         Canvas canvas =null;
@@ -49,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
             }
             newBitmap = srcBitmap.copy(bitmapConfig,true);
             canvas = new Canvas(newBitmap);
-            float x = newBitmap.getWidth();
             float y = newBitmap.getHeight()-50;
             canvas.drawText(text,10,y,textPaint);
             canvas.save();
