@@ -68,9 +68,7 @@ public class MainActivity extends AppCompatActivity {
             canvas.save();
             canvas.restore();
 
-        }catch (Exception e){
-            Log.i("add watermark",e.toString());
-        }
+        }catch (Exception e){ }
 
         return newBitmap;
     }
