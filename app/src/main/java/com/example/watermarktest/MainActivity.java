@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
             }
             newBitmap = srcBitmap.copy(bitmapConfig,true);
             canvas = new Canvas(newBitmap);
-            float y = newBitmap.getHeight()-50;
+            float y = newBitmap.getHeight()-size;
             canvas.drawText(text,10,y,textPaint);
             canvas.save();
             canvas.restore();
